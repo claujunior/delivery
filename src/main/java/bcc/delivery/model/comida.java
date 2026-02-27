@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name= "comida")
+@Table(name= "foods")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,12 +23,12 @@ public class comida {
     private long id;
 
     @Column(unique=true)
-    private String nome;
+    private String title;
 
     @Column(nullable=false)
-    private float preço;
+    private float price;
     
     @Column(unique=true)
-    private String imagem;
+    private String image;
 
 }

@@ -7,5 +7,5 @@ import bcc.delivery.model.usuario;
 
 @Repository
 public interface usuarioRepository extends JpaRepository<usuario, Long>{
-    
+    usuario findByLogin(String login);
 }

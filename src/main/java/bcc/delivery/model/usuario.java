@@ -1,5 +1,6 @@
 package bcc.delivery.model;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="usuario")
+@Table(name="users")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +29,4 @@ public class usuario {
     @Column(nullable = false)
     private String senha;
 
-    @Column(nullable = false)    
-    private String cargo;
 }
