@@ -9,4 +9,5 @@ import bcc.delivery.model.comida;
 @Repository
 public interface comidaRepository extends JpaRepository<comida, Long>{
     public Optional<comida> findByTitle(String Title);
+    public Optional<comida> findById(String Id);
 }

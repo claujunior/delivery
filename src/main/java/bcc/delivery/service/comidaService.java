@@ -32,4 +32,17 @@ public class comidaService {
             .orElseThrow(() -> new RuntimeException("Não existe comida com esse nome"));
     }
 
-}
+        public comida attComida(Long id, comida food){
+            return  comidaRepo.findById(id)
+            .map(foodOriginal -> {
+                    foodOriginal.setTitle(food.getTitle());
+                    foodOriginal.setPrice(food.getPrice());
+                    foodOriginal.setImage(food.getImage());
+                    return comidaRepo.save(foodOriginal);
+                })
+            .orElseThrow(() -> new RuntimeException("Comida não encontrada"));
+        }
+        public void deletarComida(Long id){
+              comidaRepo.deleteById(id);
+        }
+    }
