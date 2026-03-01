@@ -20,7 +20,7 @@ import lombok.Setter;
 public class comida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(unique=true)
     private String title;

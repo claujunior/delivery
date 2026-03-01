@@ -41,6 +41,8 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())                 // habilita CORS
             .headers(headers -> headers.frameOptions(frame -> frame.disable())) // H2 console
             .authorizeHttpRequests(auth -> auth
+
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // H2 console liberado
                 .requestMatchers("/h2-console/**").permitAll()
 
