@@ -28,6 +28,7 @@ public class SecurityConfig {
                 registry.addMapping("/**")                        
                         .allowedOrigins("http://localhost:5173") 
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
                         .allowCredentials(true);                
             }
         };
@@ -35,31 +36,22 @@ public class SecurityConfig {
 
     
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(AbstractHttpConfigurer::disable)           
-            .cors(Customizer.withDefaults())                
-            .headers(headers -> headers.frameOptions(frame -> frame.disable())) 
-            .authorizeHttpRequests(auth -> auth
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(AbstractHttpConfigurer::disable)
+        .cors(Customizer.withDefaults())
+        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/h2-console/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/foods/get").permitAll()
+            .requestMatchers(HttpMethod.POST, "/foods/save").hasRole("ADMIN")
+            .anyRequest().authenticated()
+        )
+        .formLogin(AbstractHttpConfigurer::disable)  
+        .httpBasic(Customizer.withDefaults());
 
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-              
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/foods/get").permitAll()
-
-                
-                .requestMatchers(HttpMethod.POST, "/foods/save").permitAll()
-
-              
-                .anyRequest().authenticated()
-            )
-            .formLogin(Customizer.withDefaults())
-            .httpBasic(AbstractHttpConfigurer::disable); 
-
-        return http.build();
-    }
+    return http.build();
+}
 
    
     @Bean
@@ -74,7 +66,7 @@ public class SecurityConfig {
 
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(enc.encode("admin123"))
+                .password(enc.encode("12345"))
                 .roles("ADMIN")
                 .build();
 
